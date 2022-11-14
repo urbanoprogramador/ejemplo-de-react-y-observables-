@@ -15,7 +15,7 @@ export default function Descargar({ indice, show, togle }: Props) {
         <div>
           <button
             onClick={() => {
-              const time = Math.round(Math.random() * (7000 - 1000) + 1000);
+              const time = Math.round(Math.random() * (7000 - 3000) + 3000);
               descargar('descarga/' + indice, time).then(([, mensaje]) => {
                 console.log('este es el mensaje ', mensaje);
                 setMensaje(mensaje);
@@ -28,7 +28,9 @@ export default function Descargar({ indice, show, togle }: Props) {
           {mensaje && (
             <Modal>
               <button onClick={() => setMensaje('')}>x</button>
-              <p>{mensaje}</p>
+              <p>
+                del modal de {indice} - {mensaje}
+              </p>
             </Modal>
           )}
         </div>
