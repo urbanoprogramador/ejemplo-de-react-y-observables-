@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Descargar from './Descargar';
+import { vigilar$ } from './observables';
 import './style.css';
 
 export default function App() {
@@ -10,6 +11,13 @@ export default function App() {
     temp[indi] = !temp[indi];
     setShow(temp);
   };
+  React.useEffect(() => {
+    //subject
+    const sub = vigilar$.subscribe((algo) =>
+      console.warn('peticion correcta a :', algo)
+    );
+    return () => sub.unsubscribe();
+  }, []);
   return (
     <div>
       <pre>{JSON.stringify(shows)}</pre>

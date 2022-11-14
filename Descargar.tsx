@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { descargar } from './observables';
+import { Modal } from './Modal';
 
 type Props = {
   indice: number;
@@ -7,6 +8,7 @@ type Props = {
   togle: () => void;
 };
 export default function Descargar({ indice, show, togle }: Props) {
+  const [mensaje, setMensaje] = React.useState('');
   return (
     <div>
       {show ? (
@@ -14,12 +16,21 @@ export default function Descargar({ indice, show, togle }: Props) {
           <button
             onClick={() => {
               const time = Math.round(Math.random() * (7000 - 1000) + 1000);
-              descargar('descarga/' + indice, time);
+              descargar('descarga/' + indice, time).then(([, mensaje]) => {
+                console.log('este es el mensaje ', mensaje);
+                setMensaje(mensaje);
+              });
             }}
           >
             Descargar {indice}
           </button>
           <button onClick={togle}>Ocultar {indice}</button>
+          {mensaje && (
+            <Modal>
+              <button onClick={() => setMensaje('')}>x</button>
+              <p>{mensaje}</p>
+            </Modal>
+          )}
         </div>
       ) : (
         <button onClick={togle}>mostrar {indice}</button>
